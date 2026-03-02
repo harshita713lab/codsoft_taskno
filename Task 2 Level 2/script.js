@@ -1,3 +1,7 @@
+
+import { auth, provider } from './firebase.js';
+import { createUserWithEmailAndPassword, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
 const signupForm = document.getElementById('Sgn-up-from');
 
 signupForm.addEventListener('submit', function(event) {
@@ -12,17 +16,52 @@ signupForm.addEventListener('submit', function(event) {
         return; 
     }
 
-    const userData = {
-        name: nameInput,
-        email: emailInput,
-        password: passwordInput
-    };
-
-    localStorage.setItem('quizUserData', JSON.stringify(userData));
-    localStorage.setItem('isLoggedIn', 'true'); // User ko logged in mark kar diya
-
-    alert("YAY! 🎉 Account created successfully!");
-    signupForm.reset(); 
+    createUserWithEmailAndPassword(auth, emailInput, passwordInput)
+        .then((userCredential) => {
     
-    window.location.href = "dashboard.html"; // Seedha App ke andar bheja!
+            const user = userCredential.user;
+            
+        
+            localStorage.setItem('isLoggedIn', 'true'); 
+            localStorage.setItem('quizUserName', nameInput); 
+            
+            alert("YAY! 🎉 Account created successfully on Firebase!");
+            signupForm.reset(); 
+            window.location.href = "dashboard.html"; 
+        })
+        .catch((error) => {
+        
+            const errorCode = error.code;
+            if (errorCode === 'auth/email-already-in-use') {
+                alert("This email is already registered! ❌ Please Login.");
+            } else if (errorCode === 'auth/weak-password') {
+                alert("Password is too weak! ❌ Please use at least 6 characters.");
+            } else {
+                alert("Error: " + error.message);
+            }
+        });
 });
+
+const googleBtn = document.getElementById('google-btn');
+
+
+if (googleBtn) {
+    googleBtn.addEventListener('click', function() {
+
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const user = result.user; 
+                
+    
+                localStorage.setItem('isLoggedIn', 'true'); 
+                
+                localStorage.setItem('quizUserName', user.displayName); 
+                
+                alert("YAY! 🎉 Logged in with Google successfully! Welcome " + user.displayName);
+                window.location.href = "dashboard.html"; 
+            })
+            .catch((error) => {
+                alert("Google Login Error: " + error.message);
+            });
+    });
+}

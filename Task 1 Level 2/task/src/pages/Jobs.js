@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function Jobs() {
-  // 1. Job Data
+
   const [jobs] = useState([
     { id: 1, title: 'Frontend Developer', company: 'Google', location: 'Remote', salary: '$70k - $90k' },
     { id: 2, title: 'Backend Engineer', company: 'Microsoft', location: 'New York', salary: '$85k - $110k' },
@@ -18,7 +18,6 @@ function Jobs() {
     <div style={{ padding: '40px', backgroundColor: '#f4f7f6', minHeight: '100vh' }}>
       <h1 style={{ textAlign: 'center', color: '#2c3e50', marginBottom: '10px' }}>💼 Latest Job Openings</h1>
       
-      {/* 🔍 Search Bar Section */}
       <div style={{ textAlign: 'center', marginBottom: '40px' }}>
         <input 
           type="text" 
@@ -37,10 +36,8 @@ function Jobs() {
         />
       </div>
 
-      {/* 📇 Job Cards Section */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '25px', justifyContent: 'center' }}>
         
-        {/* Ab hum 'jobs' ki jagah 'filteredJobs' par map karenge */}
         {filteredJobs.length > 0 ? (
           filteredJobs.map((job) => (
             <div key={job.id} style={{ 

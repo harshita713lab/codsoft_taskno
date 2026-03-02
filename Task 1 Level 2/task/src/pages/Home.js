@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Home() {
   return (
     <div style={{ fontFamily: 'Arial, sans-serif' }}>
-      {/* Hero Section */}
+
       <div style={{ 
         backgroundColor: '#2c3e50', 
         color: 'white', 
@@ -34,7 +34,6 @@ function Home() {
         </Link>
       </div>
 
-      {/* Features Section */}
       <div style={{ 
         display: 'flex', 
         justifyContent: 'space-around', 

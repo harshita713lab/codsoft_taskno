@@ -6,8 +6,6 @@ require('dotenv').config();
 const Product = require('./models/Product');
 
 const app = express(); 
-
-// Middleware
 app.use(cors());
 app.use(express.json());
 
